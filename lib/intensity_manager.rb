@@ -124,10 +124,8 @@ class IntensityManager
         from_index = segment_starts.index(@params[:from])
         to_index = segment_starts.index(@params[:to])
 
-        # If `@params[:to]` extends beyond the current maximum segment, 
-        # exclude the `to` boundary from the update range (`...`) since it will be a new zero segment.
-        # Otherwise, include it (`..`) because it's already part of the existing segment structure.
-        new_max_segment_bound? ? segment_starts[from_index...to_index] : segment_starts[from_index..to_index]
+        # Exclude the `to` boundary from the update range (`...`).
+        segment_starts[from_index...to_index]
     end
 
     # Removes unneeded zero values from beginning and end of intensity hash
