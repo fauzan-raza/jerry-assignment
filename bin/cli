@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/intensity_manager"
+require "optparse"
+
+options = { action: nil, from: nil, to: nil, amount: nil }
+
+parser = OptionParser.new do |opts|
+    opts.banner = "Usage: cli [options]"
+
+    opts.on("-a", "--action ACTION", "Action: set or add") { |a| options[:action] = a.to_sym }
+    opts.on("-f", "--from FROM", Integer, "Start of range") { |f| options[:from] = f }
+    opts.on("-t", "--to TO", Integer, "End of range") { |t| options[:to] = t }
+    opts.on("-m", "--amount AMOUNT", Integer, "Intensity amount") { |m| options[:amount] = m }
+end
+
+parser.parse!
+
+manager = IntensityManager.new
+result =
+    case options[:action]
+    when :set
+        manager.set(options[:from], options[:to], options[:amount])
+    when :add
+        manager.add(options[:from], options[:to], options[:amount])
+    else
+        puts "Invalid action. Use --help for usage."
+        exit 1
+    end
+
+puts "Intensities: #{result}"
