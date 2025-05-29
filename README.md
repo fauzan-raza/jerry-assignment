@@ -23,27 +23,6 @@ ruby -v
 bundler -v
 ```
 
-### Running the Program (CLI)
-Use the CLI to interact with the IntensityManager:
-
-```bash
-./bin/intensity_manager
-```
-Make sure the script is executable:
-
-```bash
-chmod +x bin/intensity_manager
-```
-You'll see an interactive prompt. Example usage:
-
-```bash
-> set 0 10 5
-> add 5 15 3
-> show
-{0=>5, 5=>8, 10=>3, 15=>0}
-Type exit to quit the program.
-```
-
 ### Ruby API
 
 ```ruby
@@ -55,8 +34,59 @@ manager.add(5, 15, 3)
 puts manager.intensities
 ```
 
+### Using IRB
+Use the Interactive Ruby Shell to run the program:
+1. On your local machine open the IRB by typing `irb` in the terminal.
+    Ensure you're in the project root and have Ruby installed. Then run:
+    ```bash
+    irb -r ./lib/intensity_manager.rb
+    ```
+    After this you can use commands like:
+    ```ruby
+    manager = IntensityManager.new
+    manager.add(0, 5, 3)
+    manager.add(5, 15, -1)
+    manager.set(3, 10, 1)
+    manager.intensities
+    ```
+
+2. Alternatively, use an online Ruby compiler/interpreter or better yet online [IRB](https://joshnuss.github.io/mruby-web-irb/).
+    Copy and paste the entire code from `lib/intensity_manager.rb`.
+    If you're not using IRB, the program will run once like a regular script and exit.
+
+    Add commands like to the end of the code you pasted and run the entire thing:
+    ```ruby
+    manager = IntensityManager.new
+    manager.add(0, 5, 3)
+    manager.add(5, 15, -1)
+    manager.set(3, 10, 1)
+    manager.intensities
+    ```
+
+### Using the CLI
+Use the CLI to interact with the IntensityManager:
+
+```bash
+./bin/intensity_manager
+```
+
+Make sure the script is executable:
+
+```bash
+chmod +x bin/intensity_manager
+```
+
+You'll see an interactive prompt. Example usage:
+
+```bash
+> bin/cli --action add --from 0 --to 15 --amount 1
+> bin/cli --action set --from 4 --to 7 --amount 3
+{0=>1, 4=>3, 7=>1, 15=>0}
+```
+
 ## Test Coverage
-The project includes a comprehensive suite of RSpec tests covering all core functionality and edge cases for the IntensityManager. Here's a breakdown of the tests implemented:
+The project includes a comprehensive suite of RSpec tests covering all core functionality and edge cases. 
+Here's a breakdown of the tests implemented:
 
 ### Running Tests
 To run the full test suite:
@@ -67,13 +97,13 @@ bundle exec rspec
 This runs all specs in spec/intensity_manager_spec.rb, which cover core behavior, edge cases, and range handling.
 
 ### Core Functionality
-- `#set`
+- **`#set`**
 
     - Sets intensity for a given range.
 
     - Overwrites an existing intensity range with a new value.
 
-- `#add`
+- **`#add`**
 
     - Adds intensity to a range, modifying existing intervals.
 
@@ -81,7 +111,7 @@ This runs all specs in spec/intensity_manager_spec.rb, which cover core behavior
 
     - Handles negative intensity values.
 
-- `#intensities`
+- **`#intensities`**
 
     - Returns the internal representation of intensity ranges.
 
@@ -113,5 +143,16 @@ This runs all specs in spec/intensity_manager_spec.rb, which cover core behavior
 ```
 
 ## Demo
-🖥️ Screen recording and screenshots demonstrating usage will be added here.
+Screenshots demonstrating usage will be added here.
 
+### CLI Demo
+![CLI Demo](assets/cli_demo.png)
+
+### CLI Options
+![CLI Options](assets/cli_options.png)
+
+### IRB (Interactive Ruby Shell) Options
+![IRB Demo](assets/irb_demo.png)
+
+### Test Suite
+![Test Suite](assets/test_suite_run.png)
